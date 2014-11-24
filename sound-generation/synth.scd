@@ -1,35 +1,27 @@
-//receiving from python
-
-s.boot;
-
-
-// SynthDef: tells the server how to generate audio translated to byte code
-// \sin: name of the sine wave
+s.boot
 
 (
-SynthDef( \sin,	{ | amp = 0.01, freq = 333, trig = 1 |
-	// amp, freq, trig: arguments declared for amplitude, frequency, and trigger
-
-	var env, sig;
-	// env, sig: variables for short envelope and signal
-
-	env = EnvGen.kr( Env.asr( 0.001, 0.9, 0.001 ), trig, doneAction: 0 );
-	sig = LFTri.ar( [ freq, freq * 0.999 ], 0.0, amp ) * env;
-	Out.ar( [ 0 ], sig * 0.6 );
+// single acid note
+SynthDef(\acid,{ arg freq, gain = 1, pos = 0, swoopfreq = 4000;
+	var envy = EnvGen.ar(Env.perc,doneAction: 2);
+	var outsnd = Saw.ar(freq, envy * gain);
+	var fline = Line.ar(swoopfreq,400,0.15);
+	var acid = Resonz.ar(outsnd,fline, 0.1);
+	Out.ar(0, Pan2.ar( acid, pos ) );
 }).add;
 
-h = Synth( \sin, [ \amp, 0.4 ] );
-
+// uses open sound control to retrieve attributes
+// message must start with /acid
 x = OSCFunc( { | msg, time, addr, port |
-	var pyFreq;
 
-	pyFreq = msg[1].asFloat;
-	( "freq is " + pyFreq ).postln;
-	h.set( \freq, pyFreq );
-}, '/print' );
+	// frequency is first element in message array
+	var pyFreq = msg[1].asFloat;
+
+	// play the synth with the user's input
+	Synth(\acid,[\freq,pyFreq, \gain, 2]);
+
+}, '/acid' );
 )
 
-3
 
-// stop the server
-s.quit;
+s.quit
