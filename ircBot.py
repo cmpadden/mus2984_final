@@ -18,6 +18,10 @@ import irc.strings
 from irc.client import ip_numstr_to_quad, ip_quad_to_numstr
 
 
+# imports required for OSC
+import interfaceOSC
+
+
 class musBot(irc.bot.SingleServerIRCBot):
     def __init__(self, channel, nickname, server, port=6667):
         """
@@ -44,38 +48,61 @@ class musBot(irc.bot.SingleServerIRCBot):
         """
         If a private message is received, perform the command specified
         """
-        print "Status: Received private message from " + str(e.source.nick) + " with command '" + str(e.arguments[0]) + "'"
+        print "Status: Received private message from " + str(e.source.nick) + " with message '" + str(e.arguments[0]) + "'"
         self.do_command(e, e.arguments[0])
 
     def on_pubmsg(self, c, e):
         """
         If a public message is received, perform command specified
         """
-        a = e.arguments[0].split(":", 1)
-        if len(a) > 1 and irc.strings.lower(a[0]) == irc.strings.lower(self.connection.get_nickname()):
+        # split the first word from the command, and send the rest to the command operation
+        a = e.arguments[0].split(" ", 1)
+        if len(a) > 1 and a[0] == "!musbot":
             self.do_command(e, a[1].strip())
-        print "Status: Received public message from " + str(e.source.nick) + " with command '" + str(e.arguments[0]) + "'"
 
         return
 
 
     def do_command(self, e, cmd):
-        print "do command"
         nick = e.source.nick
         c = self.connection
 
+        # split the command by spaces
+        splitcmd = cmd.split(" ")
+
         # here a variety of commands are added to the bot with various actions
-        if cmd == "disconnect":
+        if splitcmd[0] == "disconnect":
             self.disconnect()
 
-        elif cmd == "die":
+        elif splitcmd[0] == "die":
             self.die()
 
-        elif cmd == "acid":
+        elif splitcmd[0] == "asciiart":
+            for line in asciiArt:
+                c.notice(nick, line)
 
+        # send the command to OSC for acid note
+        elif splitcmd[0] == "acid":
+            # check to make sure the command is in the proper format
+            if (len(splitcmd) != 2) or (splitcmd[1].isdigit == False):
+                c.notice(nick, "Improper command format; Use, '!musbot acid <freq>'")
+            else:
+                interfaceOSC.sendMessageOSC(splitcmd[1], "/acid")
+
+        # send the command to OSC for snare
+        elif splitcmd[0] == "snare":
+            interfaceOSC.sendMessageOSC(0, "/snare")
+
+        # send the command to OSC for kick
+        elif splitcmd[0] == "kick":
+            interfaceOSC.sendMessageOSC(0, "/kick")
+
+        # send the command to OSC for hat
+        elif splitcmd[0] == "hat":
+            interfaceOSC.sendMessageOSC(0, "/hat")
 
         else:
-            c.notice(nick, "Not understood: " + cmd)
+            c.notice(nick, "Command not understood: " + cmd)
 
 def main():
    
