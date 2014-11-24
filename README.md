@@ -13,7 +13,7 @@ Commands recognized by the bot:
  !musbot kick | Plays the bass-drum sound file.
  !musbot hat | Plays the hi-hat sound file.
 
-Markdown | Less | Pretty
+Markdown | Less
 --- | --- | ---
-!musbot acid <freq> | `renders` | **nicely**
-1 | 2 | 3
+!musbot acid <freq> | `renders`
+1 | 2
