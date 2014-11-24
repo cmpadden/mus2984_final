@@ -15,5 +15,5 @@ Commands recognized by the bot:
 
 Markdown | Less | Pretty
 --- | --- | ---
-*Still* | `renders` | **nicely**
+!musbot acid <freq> | `renders` | **nicely**
 1 | 2 | 3
