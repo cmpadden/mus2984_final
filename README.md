@@ -7,7 +7,7 @@ Markups
 
 Commands recognized by the bot:
 
-Markdown | Less
+Command | Description
 --- | ---
 !musbot acid <freq> | Plays a single note of the acid synthesizer at a desired frequency.
 !musbot snare | Plays the snare sound file.
