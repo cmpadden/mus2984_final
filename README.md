@@ -14,6 +14,8 @@ Commands recognized by the bot:
  !musbot hat | Plays the hi-hat sound file.
 
 Markdown | Less
---- | --- | ---
-!musbot acid <freq> | `renders`
-1 | 2
+--- | ---
+!musbot acid <freq> | Plays a single note of the acid synthesizer at a desired frequency.
+!musbot snare | Plays the snare sound file.
+!musbot kick | Plays the bass-drum sound file.
+!musbot hat | Plays the hi-hat sound file.
