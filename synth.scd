@@ -1,8 +1,10 @@
 s.boot
 
-
-// SINGLE ACID NOTE
+// Synths
 (
+
+    // Acid note
+
     SynthDef(\acid,{ arg freq, gain = 1, pos = 0, swoopfreq = 4000;
 	    var envy = EnvGen.ar(Env.perc,doneAction: 2);
 	    var outsnd = Saw.ar(freq, envy * gain);
@@ -11,21 +13,13 @@ s.boot
 	    Out.ar(0, Pan2.ar( acid, pos ) );
     }).add;
 
-    // uses open sound control to retrieve attributes
-    // message must start with /acid
-    x = OSCFunc( { | msg, time, addr, port |
-	    // frequency is first element in message array
-	    var pyFreq = msg[1].asFloat;
+    // Drum sounds
 
-	    // play the synth with the user's input
-	    Synth(\acid,[\freq,pyFreq, \gain, 2]);
-    }, '/acid' );
-)
-
-// SNARE
-(
-    // load snare sound into buffer
+    // load the snare, bass drum, hat, and clap into the buffer
     ~snare = Buffer.read(s, "/Users/thrax/Google Drive/fall_2014/MUS_2984/assignments/final-project/mus2984_final/drumsounds/SNARE.WAV");
+    ~kick = Buffer.read(s, "/Users/thrax/Google Drive/fall_2014/MUS_2984/assignments/final-project/mus2984_final/drumsounds/BD.wav");
+    ~hat = Buffer.read(s, "/Users/thrax/Google Drive/fall_2014/MUS_2984/assignments/final-project/mus2984_final/drumsounds/HAT.WAV");
+    ~clap = Buffer.read(s, "/Users/thrax/Google Drive/fall_2014/MUS_2984/assignments/final-project/mus2984_final/drumsounds/CLAP.WAV");
 
     // synthdef that can play from a buffer
     SynthDef(\playSound,{arg buf, pos = 0, gain = 0.1;
@@ -33,44 +27,37 @@ s.boot
 		    Pan2.ar( PlayBuf.ar(1,buf, doneAction:2),pos,gain ) );
     }).add;
 
+    // message must start with /acid
+    ~one = OSCFunc( { | msg, time, addr, port |
+	    // frequency is first element in message array
+	    var pyFreq = msg[1].asFloat;
+
+	    // play the synth with the user's input
+	    Synth(\acid,[\freq,pyFreq, \gain, 2]);
+    }, '/acid' );
+
     // create a synth that plays snare on /snare OSC command
-    x = OSCFunc( { | msg, time, addr, port |
+    ~two = OSCFunc( { | msg, time, addr, port |
 	    Synth(\playSound, [\buf, ~snare]);
     }, '/snare' );
-)
-
-// KICK
-(
-    // load snare sound into buffer
-    ~kick = Buffer.read(s, "/Users/thrax/Google Drive/fall_2014/MUS_2984/assignments/final-project/mus2984_final/drumsounds/BD.wav");
-
-    // synthdef that can play from a buffer
-    SynthDef(\playSound,{arg buf, pos = 0, gain = 0.25;
-	    Out.ar(0,
-		    Pan2.ar( PlayBuf.ar(1,buf, doneAction:2),pos,gain ) );
-    }).add;
 
     // create a synth that plays snare on /snare OSC command
-    x = OSCFunc( { | msg, time, addr, port |
+    ~three = OSCFunc( { | msg, time, addr, port |
 	    Synth(\playSound, [\buf, ~kick]);
     }, '/kick' );
-)
-
-// HAT
-(
-    // load snare sound into buffer
-    ~hat = Buffer.read(s, "/Users/thrax/Google Drive/fall_2014/MUS_2984/assignments/final-project/mus2984_final/drumsounds/HAT.WAV");
-
-    // synthdef that can play from a buffer
-    SynthDef(\playSound,{arg buf, pos = 0, gain = 0.25;
-	    Out.ar(0,
-		    Pan2.ar( PlayBuf.ar(1,buf, doneAction:2),pos,gain ) );
-    }).add;
 
     // create a synth that plays snare on /snare OSC command
-    x = OSCFunc( { | msg, time, addr, port |
+    ~four = OSCFunc( { | msg, time, addr, port |
 	    Synth(\playSound, [\buf, ~hat]);
     }, '/hat' );
+
+    // create a synth that plays snare on /clap OSC command
+    ~five = OSCFunc( { | msg, time, addr, port |
+	    Synth(\playSound, [\buf, ~clap]);
+    }, '/clap' );
+
+    "Done loading synths";
+
 )
 
 s.quit

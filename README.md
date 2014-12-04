@@ -5,9 +5,10 @@ Controls multiple SuperCollider synthesizers through an internet relay chat (IRC
 Setup
 -------
  1. Run the IRC bot using: python2 ircBot.py
- 2. Start the SuperCollider server using: s.boot;
- 3. Start the SynthDefs
- 4. Send commands!
+ 2. Modify the sound file paths for SuperCollider
+ 3. Start the SuperCollider server using: s.boot;
+ 4. Start the SynthDefs
+ 5. Send commands!
 
 Available Commands
 --------------------
@@ -18,3 +19,4 @@ Command | Description
 !musbot snare | Plays the snare sound file.
 !musbot kick | Plays the bass-drum sound file.
 !musbot hat | Plays the hi-hat sound file.
+!musbot clap | Plays the clap sound file.

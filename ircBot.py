@@ -19,7 +19,8 @@ commands = ["Available commands include:",
             "   3) !musbot acid <freq>  ",
             "   4) !musbot snare        ",
             "   5) !musbot kick         ",
-            "   6) !musbot hat          "]
+            "   6) !musbot hat          ",
+            "   7) !musbot clap         "]
 
 # imports required for IRC
 import irc.bot
@@ -113,6 +114,10 @@ class musBot(irc.bot.SingleServerIRCBot):
         # send the command to OSC for hat
         elif splitcmd[0] == "hat":
             interfaceOSC.sendMessageOSC(0, "/hat")
+
+        # send the command to OSC for clap
+        elif splitcmd[0] == "clap":
+            interfaceOSC.sendMessageOSC(0, "/clap")
 
         else:
             c.notice(nick, "Command not understood: " + cmd)
