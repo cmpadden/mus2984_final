@@ -25,7 +25,7 @@ s.boot
 // SNARE
 (
     // load snare sound into buffer
-    ~snare = Buffer.read(s, "/Users/thrax/Desktop/supercollider-demo/drumsounds/SNARE.WAV");
+    ~snare = Buffer.read(s, "/Users/thrax/Google Drive/fall_2014/MUS_2984/assignments/final-project/mus2984_final/drumsounds/SNARE.WAV");
 
     // synthdef that can play from a buffer
     SynthDef(\playSound,{arg buf, pos = 0, gain = 0.1;
@@ -42,7 +42,7 @@ s.boot
 // KICK
 (
     // load snare sound into buffer
-    ~kick = Buffer.read(s, "/Users/thrax/Desktop/supercollider-demo/drumsounds/BD.WAV");
+    ~kick = Buffer.read(s, "/Users/thrax/Google Drive/fall_2014/MUS_2984/assignments/final-project/mus2984_final/drumsounds/BD.wav");
 
     // synthdef that can play from a buffer
     SynthDef(\playSound,{arg buf, pos = 0, gain = 0.25;
@@ -59,7 +59,7 @@ s.boot
 // HAT
 (
     // load snare sound into buffer
-    ~hat = Buffer.read(s, "/Users/thrax/Desktop/supercollider-demo/drumsounds/HAT.WAV");
+    ~hat = Buffer.read(s, "/Users/thrax/Google Drive/fall_2014/MUS_2984/assignments/final-project/mus2984_final/drumsounds/HAT.WAV");
 
     // synthdef that can play from a buffer
     SynthDef(\playSound,{arg buf, pos = 0, gain = 0.25;
@@ -72,6 +72,5 @@ s.boot
 	    Synth(\playSound, [\buf, ~hat]);
     }, '/hat' );
 )
-
 
 s.quit
