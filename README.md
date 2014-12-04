@@ -2,10 +2,15 @@ MUSIC 2984 Final Project
 ========================
 Controls multiple SuperCollider synthesizers through an internet relay chat (IRC) bot. 
 
-Markups
+Setup
 -------
+ 1. Run the IRC bot using: python2 ircBot.py
+ 2. Start the SuperCollider server using: s.boot;
+ 3. Start the SynthDefs
+ 4. Send commands!
 
-Commands recognized by the bot:
+Available Commands
+--------------------
 
 Command | Description
 --- | ---
