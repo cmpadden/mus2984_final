@@ -12,6 +12,15 @@ asciiArt = ["                      ____        _     _ ",
             " |_| |_| |_|\__,_|___/____/ \___/ \__| (_)",
             " "]
 
+global commands
+commands = ["Available commands include:",
+            "   1) !musbot commands     ",
+            "   2) !musbot asciiart     ",
+            "   3) !musbot acid <freq>  ",
+            "   4) !musbot snare        ",
+            "   5) !musbot kick         ",
+            "   6) !musbot hat          "]
+
 # imports required for IRC
 import irc.bot
 import irc.strings
@@ -79,6 +88,10 @@ class musBot(irc.bot.SingleServerIRCBot):
 
         elif splitcmd[0] == "asciiart":
             for line in asciiArt:
+                c.notice(nick, line)
+
+        elif splitcmd[0] == "commands":
+            for line in commands:
                 c.notice(nick, line)
 
         # send the command to OSC for acid note
