@@ -8,7 +8,8 @@ Setup
  2. Modify the sound file paths for SuperCollider
  3. Start the SuperCollider server using: s.boot;
  4. Start the SynthDefs
- 5. Send commands!
+ 5. Send commands by vising the IRC at:
+    http://webchat.oftc.net/?nick=&channels=musbot&uio=d4
 
 Available Commands
 --------------------
